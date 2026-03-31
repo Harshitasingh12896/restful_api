@@ -1,24 +1,36 @@
 import axios from "axios";
 
-const API_URL = "http://localhost:8081/api/v1/Student";
+const API = "http://localhost:8081/api/v1/Student";
 
-class StudentService {
+const token = localStorage.getItem("token");
 
-  getStudents() {
-    return axios.get(API_URL + "/getAll");
+axios.get(API, {
+  headers: {
+    Authorization: `Bearer ${token}`
   }
+});
 
-  saveStudent(student) {
-    return axios.post(API_URL + "/save", student);
-  }
+// GET all students
+export const getAllStudents = () => {
+  return axios.get(API + "/getAll");
+};
 
-  updateStudent(id, student) {
-    return axios.put(API_URL + "/edit/" + id, student);
-  }
+// SAVE student
+export const saveStudent = (student) => {
+  return axios.post(API + "/save", student);
+};
 
-  deleteStudent(id) {
-    return axios.delete(API_URL + "/delete/" + id);
-  }
-}
+// UPDATE student
+export const updateStudent = (id, student) => {
+  return axios.put(API + "/edit/" + id, student);
+};
 
-export default new StudentService();
+// DELETE student
+export const deleteStudent = (id) => {
+  return axios.delete(API + "/delete/" + id);
+};
+
+// GET single student
+export const getStudentById = (id) => {
+  return axios.get(API + "/student/" + id);
+};
