@@ -1,4 +1,5 @@
 package com.example.SpringMongodb.Entity;
+
 import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
@@ -9,13 +10,16 @@ public class User {
     @Id
     private String id;
 
-    @Indexed(unique = true)   // ✅ ADD THIS
+    @Indexed(unique = true)
     private String email;
 
     private String password;
 
+    private String role; // ✅ role added
 
     public User() {}
+
+    // ✅ getters & setters
 
     public String getId() {
         return id;
@@ -39,5 +43,15 @@ public class User {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    // 🔥 IMPORTANT (you missed this)
+
+    public String getRole() {
+        return role;
+    }
+
+    public void setRole(String role) {
+        this.role = role;
     }
 }

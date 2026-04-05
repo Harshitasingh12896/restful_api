@@ -2,35 +2,43 @@ import axios from "axios";
 
 const API = "http://localhost:8081/api/v1/Student";
 
-const token = localStorage.getItem("token");
+// ✅ CREATE AXIOS INSTANCE
+const api = axios.create({
+  baseURL: API,
+});
 
-axios.get(API, {
-  headers: {
-    Authorization: `Bearer ${token}`
+// ✅ ADD INTERCEPTOR (VERY IMPORTANT)
+api.interceptors.request.use((config) => {
+  const token = localStorage.getItem("token");
+
+  if (token) {
+    config.headers.Authorization = `Bearer ${token}`;
   }
+
+  return config;
 });
 
 // GET all students
 export const getAllStudents = () => {
-  return axios.get(API + "/getAll");
+  return api.get("/getAll");
 };
 
 // SAVE student
 export const saveStudent = (student) => {
-  return axios.post(API + "/save", student);
+  return api.post("/save", student);
 };
 
 // UPDATE student
 export const updateStudent = (id, student) => {
-  return axios.put(API + "/edit/" + id, student);
+  return api.put(`/edit/${id}`, student);
 };
 
 // DELETE student
 export const deleteStudent = (id) => {
-  return axios.delete(API + "/delete/" + id);
+  return api.delete(`/delete/${id}`);
 };
 
 // GET single student
 export const getStudentById = (id) => {
-  return axios.get(API + "/student/" + id);
+  return api.get(`/student/${id}`);
 };

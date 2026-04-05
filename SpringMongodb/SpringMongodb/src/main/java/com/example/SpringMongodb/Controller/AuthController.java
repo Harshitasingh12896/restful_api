@@ -32,6 +32,10 @@ public class AuthController {
 
         // 🔥 hash password before saving
         user.setPassword(passwordEncoder.encode(user.getPassword()));
+        // ✅ FIX: only set default if role is not provided
+        if (user.getRole() == null || user.getRole().isEmpty()) {
+            user.setRole("ROLE_USER");
+        }
 
         userRepo.save(user);
 
